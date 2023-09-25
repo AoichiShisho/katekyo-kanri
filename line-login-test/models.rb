@@ -1,5 +1,13 @@
 ActiveRecord::Base.establish_connection
 
-class User < ActiveRecord::Base
+class Parent < ActiveRecord::Base
+    has_many :student
+end
+
+class Teacher < ActiveRecord::Base
     
+end
+
+class Student < ActiveRecord::Base
+    belongs_to :parent
 end
