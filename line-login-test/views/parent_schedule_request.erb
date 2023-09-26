@@ -3,12 +3,21 @@
 <head>
     <title>カテキョ申請</title>
     <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png" class="card-img-top" alt="カテキョ申請">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <h1>カテキョ申請</h1>
 
     <select name="request" id="monthSelect"></select>
 
+    <div id="requestContainer"></div>
+
+    <button name="addScheduleButton">日程を追加</button>
+    <button name="button">申請</button>
+    
     <script>
         // 選択肢を自動生成するための関数
         function generateMonthOptions() {
@@ -33,10 +42,75 @@
 
         // ページが読み込まれたら選択肢を生成
         window.addEventListener("DOMContentLoaded", generateMonthOptions);
+
+        // 日程を追加するボタンのクリックイベントリスナーを追加
+        const addScheduleButton = document.querySelector("button[name='addScheduleButton']");
+        addScheduleButton.addEventListener("click", addScheduleCard);
+
+        // カードを生成して追加する関数
+        function addScheduleCard() {
+            const requestContainer = document.getElementById("requestContainer");
+
+            // 新しいカードを作成
+            const scheduleCard = document.createElement("div");
+            scheduleCard.classList.add("schedule-card");
+
+            // お子さんの名前の入力フォーム
+            const childNameInput = document.createElement("input");
+            childNameInput.setAttribute("type", "text");
+            childNameInput.setAttribute("placeholder", "お子さんの名前");
+
+            // 日にちの選択
+            const selectDate = document.createElement("input");
+            // カレンダーから選択可能にする
+            selectDate.setAttribute("type", "date");
+            selectDate.setAttribute("placeholder", "可能な日にち");
+            selectDate.setAttribute("id", "datepicker");
+            $(function() {
+                $("#datepicker").datepicker();
+            });
+
+            // 可能な時間の入力フォーム
+            const startTimeInput = document.createElement("input");
+            startTimeInput.setAttribute("type", "time");
+            startTimeInput.setAttribute("placeholder", "可能な開始時間");
+            startTimeInput.min = "07:00";
+            startTimeInput.max = "22:00";
+            
+
+            const endTimeInput = document.createElement("input");
+            endTimeInput.setAttribute("type", "time");
+            endTimeInput.setAttribute("placeholder", "可能な終了時間");
+            endTimeInput.min = "08:00";
+            endTimeInput.max = "23:00";
+
+            // 削除ボタン
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "削除";
+            deleteButton.addEventListener("click", () => {
+                requestContainer.removeChild(scheduleCard);
+            });
+
+            // カードに要素を追加
+            scheduleCard.appendChild(childNameInput);
+            scheduleCard.appendChild(selectDate);
+            scheduleCard.appendChild(startTimeInput);
+            scheduleCard.appendChild(endTimeInput);
+            scheduleCard.appendChild(deleteButton);
+
+            // カードをコンテナに追加
+            requestContainer.appendChild(scheduleCard);
+        
+        }
     </script>
 
-    <button name="button">日程を追加</button>
-    <button name="button">申請</button>
-    
+    <style>
+        .schedule-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+
 </body>
 </html>
