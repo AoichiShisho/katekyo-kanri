@@ -1,5 +1,42 @@
 <!DOCTYPE html>
 <html>
-<title>カテキョ申請</title>
-<p>カテキョ申請</p>
+<head>
+    <title>カテキョ申請</title>
+    <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png" class="card-img-top" alt="カテキョ申請">
+</head>
+<body>
+    <h1>カテキョ申請</h1>
+
+    <select name="request" id="monthSelect"></select>
+
+    <script>
+        // 選択肢を自動生成するための関数
+        function generateMonthOptions() {
+            const select = document.getElementById("monthSelect");
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+            const startMonth = 1; // 1月から始まる場合
+            const endMonth = 12; // 12月まで
+            
+            for (let month = startMonth; month <= endMonth; month++) {
+                const option = document.createElement("option");
+                option.value = `${currentYear}/${month}`;
+                option.textContent = `${currentYear}年${month}月`;
+
+                if (month === currentMonth) {
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
+            }
+        }
+
+        // ページが読み込まれたら選択肢を生成
+        window.addEventListener("DOMContentLoaded", generateMonthOptions);
+    </script>
+
+    <button name="button">日程を追加</button>
+    <button name="button">申請</button>
+    
+</body>
 </html>

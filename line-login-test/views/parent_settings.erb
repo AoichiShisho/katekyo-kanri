@@ -1,5 +1,91 @@
 <!DOCTYPE html>
 <html>
-<title>設定</title>
-<p>設定</p>
+<head>
+    <title>設定</title>
+    <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png" class="card-img-top" alt="設定">
+    <p>設定</p>
+</head>
+<body>
+    <p>お子さん</p>
+
+    <div id="childrenContainer"></div>
+    
+    <button name="addChildButton">お子さんを追加</button>
+    <button name="editButton" style="display: none;">更新</button>
+
+    <!-- お子さんのカードを表示するコンテナ -->
+
+    <script>
+        // お子さんを追加するボタンのクリックイベントリスナーを追加
+        const addChildButton = document.querySelector("button[name='addChildButton']");
+        addChildButton.addEventListener("click", addNewChild);
+
+        // カードを生成して追加する関数
+        function addNewChild() {
+            const childrenContainer = document.getElementById("childrenContainer");
+
+            // 新しいお子さんのカードを作成
+            const childCard = document.createElement("div");
+            childCard.classList.add("child-card");
+
+            // 氏名の入力フォーム
+            const nameInput = document.createElement("input");
+            nameInput.setAttribute("type", "text");
+            nameInput.setAttribute("placeholder", "氏名");
+
+            // 学年の入力フォーム
+            const gradeInput = document.createElement("input");
+            gradeInput.setAttribute("type", "text");
+            gradeInput.setAttribute("placeholder", "学年");
+
+            // 学校名の入力フォーム
+            const schoolInput = document.createElement("input");
+            schoolInput.setAttribute("type", "text");
+            schoolInput.setAttribute("placeholder", "学校名");
+
+            // 削除ボタン
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "削除";
+            deleteButton.addEventListener("click", () => {
+                childrenContainer.removeChild(childCard);
+                // カードが削除されたとき、入力フォームが1つ以上残っていれば更新ボタンを表示
+                if (childrenContainer.querySelectorAll(".child-card").length > 0) {
+                    editButton.style.display = "inline-block";
+                } else {
+                    editButton.style.display = "none";
+                }
+            });
+
+            // カードに要素を追加
+            childCard.appendChild(nameInput);
+            childCard.appendChild(gradeInput);
+            childCard.appendChild(schoolInput);
+            childCard.appendChild(deleteButton);
+
+            // カードをコンテナに追加
+            childrenContainer.appendChild(childCard);
+
+            // カードが追加されたとき、更新ボタンを表示
+            editButton.style.display = "inline-block";
+        }
+
+        // 更新ボタンのクリックイベントリスナーを追加
+        const editButton = document.querySelector("button[name='editButton']");
+        editButton.addEventListener("click", updateChildren);
+
+        // 更新処理を実行する関数
+        function updateChildren() {
+            // ここに更新処理を記述
+            alert("更新ボタンがクリックされました。");
+        }
+    </script>
+
+    <style>
+        .child-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</body>
 </html>
