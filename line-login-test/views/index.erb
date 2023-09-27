@@ -44,34 +44,39 @@
 
                         // IDによってリダイレクトを変更する
                         let redirectUrl = "";
-                        userId = "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
+                        // userId = "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
+                        
+                        const userType = (userId === "Ud8ad4ebf8e3482fa10e3a0c21ab32390") ? "teacher" : "parent";
+                        
+                        $.ajax({
+                            type: "POST",
+                            url: "/set_user_type",
+                            data: { userType: userType },
+                            success: function(response) {
+                                if (userType === "teacher") {
+                                    redirectUrl = "/teacher/" + userId;
+                                } else {
+                                    redirectUrl = "/" + userId;
+                                }
 
-                        if (userId === "Ud8ad4ebf8e3482fa10e3a0c21ab3239") {
-                            redirectUrl = "/teacher/" + userId;
-                        } else {
-                            redirectUrl = userId;
-                        }
+                                // リダクレクト
+                                window.location.href = redirectUrl;
+                            }
+                        });
 
-                        // リダクレくと
-                        window.location.href = redirectUrl;
+
                     })
                     .catch((error) => {
                         console.error("プロフィール情報の取得エラー：" + error);
                     });
                     
+                console.log("リダイレクトされていません！");
                 console.log("idToken: " + idToken);
             } else {
                 // ログインされていない場合、ログインを促す
                 liff.login();
             }
         }    
-        
-        function sessionLogin(parent_id) {
-            liff.setAppData({
-                session: { parent: parent_id }
-            });
-            redirectUrl = "/" + userId;
-        }
         
         function profileConsoleTest(profile) {
             console.log("ユーザー名：" + displayName);

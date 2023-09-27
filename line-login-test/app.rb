@@ -30,6 +30,19 @@ post '/teacher/:id' do
     { parent_id: parent.id }.to_json
 end
 
+post '/set_user_type' do
+    user_type = params[:user_type]
+    session[:user_type] = user_type
+    
+    if user_type == "teacher"
+        session[:teacher] = current_user.line_id
+    else
+        session[:parent] = current_user.line_id
+    end
+
+    status 200
+end
+
 get '/:id' do
     session[:parent] = params[:id]
     erb :parent_page
