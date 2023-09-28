@@ -34,9 +34,24 @@
             nameInput.setAttribute("placeholder", "氏名");
 
             // 学年の入力フォーム
-            const gradeInput = document.createElement("input");
-            gradeInput.setAttribute("type", "text");
+            const gradeInput = document.createElement("select");
+            // gradeInput.setAttribute("type", "text");
             gradeInput.setAttribute("placeholder", "学年");
+            // 選択肢を追加
+            const gradeOptions = [
+                { value: "1", label: "中学一年生" },
+                { value: "2", label: "中学二年生" },
+                { value: "3", label: "中学三年生" },
+                { value: "4", label: "高校一年生" },
+                { value: "5", label: "高校二年生" },
+                { value: "6", label: "高校三年生" },
+            ];
+            gradeOptions.forEach((optionData) => {
+                const option = document.createElement("option");
+                option.value = optionData.value;
+                option.text = optionData.label;
+                gradeInput.appendChild(option);
+            });
 
             // 学校名の入力フォーム
             const schoolInput = document.createElement("input");
