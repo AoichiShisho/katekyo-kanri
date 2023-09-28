@@ -8,7 +8,13 @@ enable :sessions
 
 helpers do
     def current_user
-        Parent.find_by(line_id: session[:parent])
+        if session[:user_type] == 'parent'
+            Parent.find_by(line_id: session[:parent])
+        elsif session[:user_type] == 'teacher'
+            Teacher.find_by(line_id: session[:teacher])
+        else
+            nil
+        end
     end
 end
 
@@ -17,17 +23,8 @@ get '/' do
 end
 
 get '/teacher/:id' do
+    session[:teacher] = params[:id]
     erb :teacher_page
-end
-
-post '/teacher/:id' do
-    name = params[:name]
-    img_url = params[:img_url]
-    line_id = params[:line_id]
-        
-    parent = Parent.create(name: name, img_url: img_url, line_id: line_id)
-    
-    { parent_id: parent.id }.to_json
 end
 
 post '/parent' do
@@ -41,7 +38,23 @@ post '/parent' do
         line_id: line_id
     )
     
+   session[:user_type] = 'parent' 
     { parent_id: line_id }.to_json
+end
+
+post '/teacher' do
+    name = params[:name]
+    img_url = params[:img_url]
+    line_id = params[:line_id]
+    
+    teacher = Teacher.create(
+        name: name,
+        img_url: img_url,
+        line_id: line_id
+    )
+    
+    session[:user_type] = 'teacher'
+    { teacher_id: line_id }.to_json
 end
 
 get '/:id' do

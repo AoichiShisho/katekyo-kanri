@@ -21,4 +21,13 @@ ActiveRecord::Schema.define(version: 2023_09_17_170044) do
     t.string "line_id"
   end
 
+  create_table "teachers", force: :cascade do |t|
+    t.string "name"
+    t.string "img_url"
+    t.string "line_id"
+    t.string "bank_name"
+    t.string "branch_name"
+    t.integer "account_num"
+  end
+
 end

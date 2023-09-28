@@ -46,10 +46,9 @@
                         let redirectUrl = "";
                         // my line id is  "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
 
-                        const parentList = ["Ud8ad4ebf8e3482fa10e3a0c21ab32390"];
+                        const parentList = ["Ud8ad4ebf8e3482fa10e3a0c21ab3239"];
                         
                         if (parentList.includes(userId)) {
-                            // プロフィール情報をSinatraアプリケーションに送信
                             $.post("/parent", { 
                                 name: displayName, 
                                 img_url: pictureUrl, 
@@ -58,6 +57,16 @@
                                 console.log("Parentが作成されました。 Response: " + response);
                                 
                                 window.location.href = '/' + userId;
+                            });
+                        } else {
+                            $.post("/teacher", {
+                                name: displayName,
+                                img_url: pictureUrl,
+                                line_id: userId
+                            }, function(response) {
+                                console.log("Teacherが作成されました。Response: " + response);
+                                
+                                window.location.href = "/teacher/" + userId;
                             });
                         }
                     })
