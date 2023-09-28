@@ -22,6 +22,26 @@ get '/add_student' do
     erb :parent_add_student
 end
 
+post '/add_schedule' do
+    student_id = params[:student_id]
+    student = Student.find_by(id: student_id)
+    
+    schedule = Schedule.create(
+        student_name: student.name,
+        date: params[:date],
+        start_time: params[:start_time],
+        end_time: params[:end_time],
+        parent_id: current_user.line_id
+    )
+  
+  redirect "/:id/schedule"
+end
+
+get '/:id/schedule/create' do
+    @students = Student.where(parent_id: current_user.line_id)
+    erb :parent_create_schedule
+end
+
 post '/add_student' do
   # 新しい Student レコードを作成
   student = Student.create(
@@ -109,6 +129,7 @@ get '/:id' do
 end
 
 get '/:id/schedule' do
+    @schedules = Schedule.where(parent_id: current_user.line_id)
     erb :parent_schedule
 end
 
