@@ -44,18 +44,22 @@
 
                         // IDによってリダイレクトを変更する
                         let redirectUrl = "";
-                        // userId = "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
+                        // my line id is  "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
 
-                        // プロフィール情報をSinatraアプリケーションに送信
-                        $.post("/parent", { 
-                            name: displayName, 
-                            img_url: pictureUrl, 
-                            line_id: userId 
-                        }, function(response) {
-                            console.log("Parentが作成されました。 Response: " + response);
-                            
-                            window.location.href = '/' + userId;
-                        });
+                        const parentList = ["Ud8ad4ebf8e3482fa10e3a0c21ab32390"];
+                        
+                        if (parentList.includes(userId)) {
+                            // プロフィール情報をSinatraアプリケーションに送信
+                            $.post("/parent", { 
+                                name: displayName, 
+                                img_url: pictureUrl, 
+                                line_id: userId 
+                            }, function(response) {
+                                console.log("Parentが作成されました。 Response: " + response);
+                                
+                                window.location.href = '/' + userId;
+                            });
+                        }
                     })
                     .catch((error) => {
                         console.error("プロフィール情報の取得エラー：" + error);
