@@ -113,6 +113,7 @@ get '/:id/schedule' do
 end
 
 get '/:id/schedule/request' do
+    @students = Student.where(parent_id: current_user.line_id)
     erb :parent_schedule_request
 end
 

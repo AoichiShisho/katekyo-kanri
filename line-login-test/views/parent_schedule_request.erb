@@ -56,9 +56,21 @@
             scheduleCard.classList.add("schedule-card");
 
             // お子さんの名前の入力フォーム
-            const childNameInput = document.createElement("input");
-            childNameInput.setAttribute("type", "text");
-            childNameInput.setAttribute("placeholder", "お子さんの名前");
+            // const studentNameInput = document.createElement("input");
+            // studentNameInput.setAttribute("type", "text");
+            // studentNameInput.setAttribute("placeholder", "お子さんの名前");
+            
+            // お子さんの名前の選択リスト
+            const studentNameSelect = document.createElement("select");
+            studentNameSelect.name = "studentName";
+            // current_user が作成した Student の情報から選択肢を生成
+            const students = <%= @students.to_json %>; // Ruby の変数から JavaScriptへデータを渡す
+            students.forEach((student) => {
+                const option = document.createElement("option");
+                option.value = student.name;
+                option.textContent = student.name;
+                studentNameSelect.appendChild(option);
+            });
 
             // 日にちの選択
             const selectDate = document.createElement("input");
@@ -92,7 +104,7 @@
             });
 
             // カードに要素を追加
-            scheduleCard.appendChild(childNameInput);
+            scheduleCard.appendChild(studentNameSelect);
             scheduleCard.appendChild(selectDate);
             scheduleCard.appendChild(startTimeInput);
             scheduleCard.appendChild(endTimeInput);
