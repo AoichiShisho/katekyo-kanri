@@ -2,105 +2,56 @@
 <html>
 <head>
     <title>設定</title>
-    <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png" class="card-img-top" alt="設定">
-    <p>設定</p>
+    <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png" class="setting-image" alt="設定">
+    <p class="setting-title">設定</p>
 </head>
+
+<style>
+    .setting-image {
+        display: block;
+        margin: 0 auto;
+        max-width: 20%;
+        max-height: 20%;
+    }
+    
+    .setting-title {
+        text-align: center;
+        font-size: 24px; /* フォントサイズを調整 */
+        font-weight: bold;
+    }
+    
+    .student-card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+    }
+
+</style>
+
 <body>
     <p>お子さん</p>
 
-    <div id="childrenContainer"></div>
+    <div id="studentContainer">
+        <% if @students.empty? %>
+            <p>お子さんが存在して居ません。</p>
+        <% else %>
+            <% @students.each do |student| %>
+                <div class="student-card">
+                    <p><strong>生徒名：</strong> <%= student.name %> </p>
+                    <p><strong>学年：</strong> <%= student.grade_id %> </p>
+                    <p><strong>学校名：</strong> <%= student.school %> </p>
+                </div>
+            <% end %>
+        <!--<#% else %>-->
+        <!--    <p>お子さんを登録していません。</p>-->
+        <% end %>
+    </div>
     
-    <button name="addChildButton">お子さんを追加</button>
-    <button name="editButton" style="display: none;">更新</button>
-
-    <!-- お子さんのカードを表示するコンテナ -->
-
-    <script>
-        // お子さんを追加するボタンのクリックイベントリスナーを追加
-        const addChildButton = document.querySelector("button[name='addChildButton']");
-        addChildButton.addEventListener("click", addNewChild);
-
-        // カードを生成して追加する関数
-        function addNewChild() {
-            const childrenContainer = document.getElementById("childrenContainer");
-
-            // 新しいお子さんのカードを作成
-            const childCard = document.createElement("div");
-            childCard.classList.add("child-card");
-
-            // 氏名の入力フォーム
-            const nameInput = document.createElement("input");
-            nameInput.setAttribute("type", "text");
-            nameInput.setAttribute("placeholder", "氏名");
-
-            // 学年の入力フォーム
-            const gradeInput = document.createElement("select");
-            // gradeInput.setAttribute("type", "text");
-            gradeInput.setAttribute("placeholder", "学年");
-            // 選択肢を追加
-            const gradeOptions = [
-                { value: "1", label: "中学一年生" },
-                { value: "2", label: "中学二年生" },
-                { value: "3", label: "中学三年生" },
-                { value: "4", label: "高校一年生" },
-                { value: "5", label: "高校二年生" },
-                { value: "6", label: "高校三年生" },
-            ];
-            gradeOptions.forEach((optionData) => {
-                const option = document.createElement("option");
-                option.value = optionData.value;
-                option.text = optionData.label;
-                gradeInput.appendChild(option);
-            });
-
-            // 学校名の入力フォーム
-            const schoolInput = document.createElement("input");
-            schoolInput.setAttribute("type", "text");
-            schoolInput.setAttribute("placeholder", "学校名");
-
-            // 削除ボタン
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "削除";
-            deleteButton.addEventListener("click", () => {
-                childrenContainer.removeChild(childCard);
-                // カードが削除されたとき、入力フォームが1つ以上残っていれば更新ボタンを表示
-                if (childrenContainer.querySelectorAll(".child-card").length > 0) {
-                    editButton.style.display = "inline-block";
-                } else {
-                    editButton.style.display = "none";
-                }
-            });
-
-            // カードに要素を追加
-            childCard.appendChild(nameInput);
-            childCard.appendChild(gradeInput);
-            childCard.appendChild(schoolInput);
-            childCard.appendChild(deleteButton);
-
-            // カードをコンテナに追加
-            childrenContainer.appendChild(childCard);
-
-            // カードが追加されたとき、更新ボタンを表示
-            editButton.style.display = "inline-block";
-        }
-
-        // 更新ボタンのクリックイベントリスナーを追加
-        const editButton = document.querySelector("button[name='editButton']");
-        editButton.addEventListener("click", updateChildren);
-
-        // 更新処理を実行する関数
-        function updateChildren() {
-            // ここに更新処理を記述
-            alert("更新ボタンがクリックされました。");
-        }
-    </script>
-
-    <style>
-        .child-card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-        }
-    </style>
+    <a href="/add_student">
+        <button name="addStudentButton">お子さんを追加</button>
+    </a>
+    <br>
+    <button name="updateButton">編集</button>
+    
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>設定</title>
+    <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png" class="setting-image" alt="設定">
+    <p class="setting-title">設定</p>
+</head>
+
+<style>
+    .setting-image {
+        display: block;
+        margin: 0 auto;
+        max-width: 20%;
+        max-height: 20%;
+    }
+    
+    .setting-title {
+        text-align: center;
+        font-size: 24px; /* フォントサイズを調整 */
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <p>お子さん</p>
+
+    <div id="studentContainer"></div>
+    
+    <form action="/add_student" method="post">
+        <input type="text" name="name" placeholder="お子さんの名前を記入" required>
+        <br>
+        <select name="grade_id" id="grade_id" required>
+            <option value="1">中学一年生</option>
+            <option value="2">中学二年生</option>
+            <option value="3">中学三年生</option>
+            <option value="4">高校一年生</option>
+            <option value="5">高校二年生</option>
+            <option value="6">高校三年生</option>
+        </select>
+        <br>
+        <input type="text" name="school" placeholder="学校名" required>
+        <button type="submit" name="submit">更新</button>
+    </form>
+    
+</body>
+</html>

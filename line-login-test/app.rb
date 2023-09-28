@@ -18,6 +18,27 @@ helpers do
     end
 end
 
+get '/add_student' do
+    erb :parent_add_student
+end
+
+post '/add_student' do
+  # 新しい Student レコードを作成
+  student = Student.create(
+    name: params[:name],
+    grade_id: params[:grade_id],
+    school: params[:school],
+    parent_id: current_user.line_id
+  )
+
+  redirect "/#{current_user.line_id}/settings"
+end
+
+get '/:id/settings' do
+    @students = Student.where(parent_id: current_user.line_id)
+    erb :parent_settings
+end
+
 get '/' do
     erb :index
 end
@@ -76,8 +97,4 @@ end
 
 get '/:id/transfer' do
     erb :parent_transfer
-end
-
-get '/:id/settings' do
-    erb :parent_settings
 end
