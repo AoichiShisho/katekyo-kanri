@@ -34,6 +34,31 @@ post '/add_student' do
   redirect "/#{current_user.line_id}/settings"
 end
 
+post '/edit_student' do
+  student_id = params[:student_id]
+  name = params[:name]
+  grade_id = params[:grade_id]
+  school = params[:school]
+
+  # student_id を使用して該当のお子さんを取得
+  student = Student.find_by(id: student_id)
+
+  # お子さんの情報を更新
+  student.update(
+    name: name,
+    grade_id: grade_id,
+    school: school
+  )
+
+  redirect "/#{current_user.line_id}/settings"
+end
+
+get '/edit_student/:id' do
+    student_id = params[:id]
+    @student = Student.find_by(id: student_id)
+    erb :parent_edit_student
+end
+
 get '/:id/settings' do
     @students = Student.where(parent_id: current_user.line_id)
     erb :parent_settings

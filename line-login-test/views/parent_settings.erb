@@ -33,17 +33,16 @@
 
     <div id="studentContainer">
         <% if @students.empty? %>
-            <p>お子さんが存在して居ません。</p>
+            <p>お子さんが登録されていません。</p>
         <% else %>
             <% @students.each do |student| %>
                 <div class="student-card">
                     <p><strong>生徒名：</strong> <%= student.name %> </p>
                     <p><strong>学年：</strong> <%= student.grade_id %> </p>
                     <p><strong>学校名：</strong> <%= student.school %> </p>
+                    <a href="/edit_student/<%= student.id %>">編集</a>
                 </div>
             <% end %>
-        <!--<#% else %>-->
-        <!--    <p>お子さんを登録していません。</p>-->
         <% end %>
     </div>
     
@@ -51,7 +50,6 @@
         <button name="addStudentButton">お子さんを追加</button>
     </a>
     <br>
-    <button name="updateButton">編集</button>
     
 </body>
 </html>
