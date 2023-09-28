@@ -45,26 +45,17 @@
                         // IDによってリダイレクトを変更する
                         let redirectUrl = "";
                         // userId = "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
-                        
-                        const userType = (userId === "Ud8ad4ebf8e3482fa10e3a0c21ab32390") ? "teacher" : "parent";
-                        
-                        $.ajax({
-                            type: "POST",
-                            url: "/set_user_type",
-                            data: { userType: userType },
-                            success: function(response) {
-                                if (userType === "teacher") {
-                                    redirectUrl = "/teacher/" + userId;
-                                } else {
-                                    redirectUrl = "/" + userId;
-                                }
 
-                                // リダクレクト
-                                window.location.href = redirectUrl;
-                            }
+                        // プロフィール情報をSinatraアプリケーションに送信
+                        $.post("/parent", { 
+                            name: displayName, 
+                            img_url: pictureUrl, 
+                            line_id: userId 
+                        }, function(response) {
+                            console.log("Parentが作成されました。 Response: " + response);
+                            
+                            window.location.href = '/' + userId;
                         });
-
-
                     })
                     .catch((error) => {
                         console.error("プロフィール情報の取得エラー：" + error);

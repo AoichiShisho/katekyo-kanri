@@ -30,17 +30,18 @@ post '/teacher/:id' do
     { parent_id: parent.id }.to_json
 end
 
-post '/set_user_type' do
-    user_type = params[:user_type]
-    session[:user_type] = user_type
+post '/parent' do
+    name = params[:name]
+    img_url = params[:img_url]
+    line_id = params[:line_id]
     
-    if user_type == "teacher"
-        session[:teacher] = current_user.line_id
-    else
-        session[:parent] = current_user.line_id
-    end
-
-    status 200
+    parent = Parent.create(
+        name: name,
+        img_url: img_url,
+        line_id: line_id
+    )
+    
+    { parent_id: line_id }.to_json
 end
 
 get '/:id' do
