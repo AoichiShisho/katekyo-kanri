@@ -37,6 +37,10 @@ post '/add_schedule' do
   redirect "/:id/schedule"
 end
 
+get '/teacher/:id/schedule' do
+    erb :teacher_schedule
+end
+
 get '/:id/schedule/create' do
     @students = Student.where(parent_id: current_user.line_id)
     erb :parent_create_schedule
