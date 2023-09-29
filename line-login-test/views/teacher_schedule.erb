@@ -37,8 +37,8 @@
             <div class="bg-white rounded-lg shadow-md p-4 mb-4">
                 <p class="text-lg">名前：<%= schedule.student_name %></p>
                 <p class="text-lg">日にち：<%= schedule.date %></p>
-                <p class="text-lg">開始時間：<%= schedule.start_time %></p>
-                <p class="text-lg">終了時間：<%= schedule.end_time %></p>
+                <p class="text-lg">開始時間：<%= schedule.start_time.strftime('%H:%M') %></p>
+                <p class="text-lg">終了時間：<%= schedule.end_time.strftime('%H:%M') %></p>
             </div>
         <% end %>
     </div>

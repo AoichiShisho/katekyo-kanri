@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2023_09_28_195310) do
     t.time "start_time"
     t.time "end_time"
     t.string "parent_id"
+    t.string "student_id"
+    t.string "review"
   end
 
   create_table "students", force: :cascade do |t|

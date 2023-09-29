@@ -6,6 +6,8 @@ class CreateSchedules < ActiveRecord::Migration[6.1]
       t.time :start_time
       t.time :end_time
       t.string :parent_id
+      t.string :student_id
+      t.string :review
     end
   end
 end
