@@ -18,11 +18,12 @@ helpers do
     end
 end
 
-get '/add_student' do
+get '/:id/add_student' do
+    session[:parent] = params[:id]
     erb :parent_add_student
 end
 
-post '/add_schedule' do
+post '/:id/add_schedule' do
     student_id = params[:student_id]
     student = Student.find_by(id: student_id)
     
@@ -46,16 +47,17 @@ get '/:id/schedule/create' do
     erb :parent_create_schedule
 end
 
-post '/add_student' do
+post '/:id/add_student' do
+  session[:parent] = params[:id]
   # 新しい Student レコードを作成
   student = Student.create(
     name: params[:name],
     grade_id: params[:grade_id],
     school: params[:school],
-    parent_id: current_user.line_id
+    parent_id: :id
   )
 
-  redirect "/#{current_user.line_id}/settings"
+  redirect "/:id/settings"
 end
 
 post '/edit_student' do
@@ -84,7 +86,8 @@ get '/edit_student/:id' do
 end
 
 get '/:id/settings' do
-    @students = Student.where(parent_id: current_user.line_id)
+    session[:parent] = params[:id]
+    @students = Student.where(parent_id: :id)
     erb :parent_settings
 end
 
@@ -126,6 +129,7 @@ post '/teacher' do
     session[:user_type] = 'teacher'
     { teacher_id: line_id }.to_json
 end
+
 
 get '/:id' do
     session[:parent] = params[:id]

@@ -30,7 +30,7 @@
 
     <div id="studentContainer"></div>
     
-    <form action="/add_student" method="post">
+    <form action="/<%= params[:id] %>/add_student" method="post">
         <input type="text" name="name" placeholder="お子さんの名前を記入" required>
         <br>
         <select name="grade_id" id="grade_id" required>
