@@ -24,6 +24,7 @@ get '/:id/add_student' do
 end
 
 post '/:id/add_schedule' do
+    session[:parent] = params[:id]
     student_id = params[:student_id]
     student = Student.find_by(id: student_id)
     
@@ -32,7 +33,7 @@ post '/:id/add_schedule' do
         date: params[:date],
         start_time: params[:start_time],
         end_time: params[:end_time],
-        parent_id: current_user.line_id
+        parent_id: :id
     )
   
   redirect "/:id/schedule"
@@ -43,7 +44,8 @@ get '/teacher/:id/schedule' do
 end
 
 get '/:id/schedule/create' do
-    @students = Student.where(parent_id: current_user.line_id)
+    session[:parent] = params[:id]
+    @students = Student.where(parent_id: :id)
     erb :parent_create_schedule
 end
 
@@ -130,14 +132,14 @@ post '/teacher' do
     { teacher_id: line_id }.to_json
 end
 
-
 get '/:id' do
     session[:parent] = params[:id]
     erb :parent_page
 end
 
 get '/:id/schedule' do
-    @schedules = Schedule.where(parent_id: current_user.line_id)
+    session[:parent] = params[:id]
+    @schedules = Schedule.where(parent_id: :id)
     erb :parent_schedule
 end
 

@@ -13,7 +13,7 @@
 <body>
     <h1>日程追加</h1>
 
-    <form action="/add_schedule" method="POST">
+    <form action="/<%= params[:id] %>/add_schedule" method="POST">
         <label for="student_id">学生の名前:</label>
         <select id="student_id" name="student_id" required>
             <% @students.each do |student| %>

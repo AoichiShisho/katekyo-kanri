@@ -24,7 +24,7 @@
 <body>
     <h1>カテキョ日程</h1>
 
-     <div id="requestContainer">
+    <div id="requestContainer">
         <% @schedules.each do |schedule| %>
             <div class="schedule-card">
                 <p>学生の名前: <%= schedule.student_name %></p>
@@ -43,14 +43,6 @@
     <a href="/<%= params[:id] %>/schedule/create">
         <button name="addScheduleButton">日程を追加</button>
     </a>
-
-    <style>
-        .schedule-card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-        }
-    </style>
 
 </body>
 </html>
