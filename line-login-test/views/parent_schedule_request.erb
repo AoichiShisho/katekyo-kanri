@@ -3,25 +3,46 @@
 <head>
     <title>カテキョ日程</title>
     <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png" class="card-img-top" alt="カテキョ申請">
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
+
+<style>
+    body {
+        background-color: #B0C4DE;
+    }
+    
+    .schedule-card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+
+
 <body>
     <h1>カテキョ日程</h1>
 
+    <div id="requestContainer">
+        <% @schedules.each do |schedule| %>
+            <div class="schedule-card">
+                <p>学生の名前: <%= schedule.student_name %></p>
+                <p>日付: <%= schedule.date %></p>
+                <p>開始時間: <%= schedule.start_time.strftime('%H:%M') %></p>
+                <p>終了時間: <%= schedule.end_time.strftime('%H:%M') %></p>
+            </div>
+        <% end %>
+        <% if @schedules.empty? %>
+            <p>スケジュールがありません。</p>
+        <% end %>
+    </div>
+
     <div id="requestContainer"></div>
 
-    <button name="addScheduleButton">日程を追加</button>
-
-    <style>
-        .schedule-card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-        }
-    </style>
+    <a href="/<%= params[:id] %>/schedule/create">
+        <button name="addScheduleButton">日程を追加</button>
+    </a>
 
 </body>
 </html>

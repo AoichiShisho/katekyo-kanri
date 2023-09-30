@@ -31,15 +31,16 @@
 
 <body>
     <div class="container">
-        <h1 class="text-3xl font-semibold mb-4">カテキョ日程</h1>
+        <h1 class="text-3xl font-semibold mb-4">カテキョ承認</h1>
         
         <% Schedule.all.each do |schedule| %>
-            <% if schedule.teacher_id == current_user.line_id %>
+            <% if schedule.teacher_id.nil? %>
                 <div class="bg-white rounded-lg shadow-md p-4 mb-4">
                     <p class="text-lg">名前：<%= schedule.student_name %></p>
                     <p class="text-lg">日にち：<%= schedule.date %></p>
                     <p class="text-lg">開始時間：<%= schedule.start_time.strftime('%H:%M') %></p>
                     <p class="text-lg">終了時間：<%= schedule.end_time.strftime('%H:%M') %></p>
+                    <a href="/join_schedule/<%= schedule.id %>" class="btn-link">参加する</a>
                 </div>
             <% end %>
         <% end %>

@@ -23,6 +23,22 @@ get '/:id/add_student' do
     erb :parent_add_student
 end
 
+get '/join_schedule/:id' do
+    schedule_id = params[:id]
+    user = current_user
+
+    if user && user.is_a?(Teacher)  # ログインユーザーが教師の場合
+        schedule = Schedule.find_by(id: schedule_id)
+        if schedule && schedule.teacher_id.nil?
+            # スケジュールのteacher_idをログインユーザーのIDに更新
+            schedule.update(teacher_id: user.id)
+        end
+    end
+
+    # /teacher/:id/schedule にリダイレクト
+    redirect "/teacher/#{user.line_id}/schedule/request"
+end
+
 post '/:id/add_schedule' do
     session[:parent] = params[:id]
     student_id = params[:student_id]
@@ -39,8 +55,9 @@ post '/:id/add_schedule' do
   redirect "/:id/schedule"
 end
 
-get '/teacher/:id/schedule' do
-    erb :teacher_schedule
+get '/teacher/:id/schedule/request' do
+    session[:parent] = params[:id]
+    erb :teacher_schedule_request
 end
 
 get '/:id/schedule/create' do
@@ -91,6 +108,12 @@ get '/:id/settings' do
     session[:parent] = params[:id]
     @students = Student.where(parent_id: :id)
     erb :parent_settings
+end
+
+get '/teacher/:id/schedule' do
+    session[:parent] = params[:id]
+    
+    erb :teacher_schedule
 end
 
 get '/' do
