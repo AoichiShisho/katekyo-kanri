@@ -40,6 +40,11 @@
                     <p class="text-lg">日にち：<%= schedule.date %></p>
                     <p class="text-lg">開始時間：<%= schedule.start_time.strftime('%H:%M') %></p>
                     <p class="text-lg">終了時間：<%= schedule.end_time.strftime('%H:%M') %></p>
+                    <p class="text-lg">振り返り：<%= schedule.review %></p>
+                    <form method="post" action="/update_review/<%= schedule.id %>">
+                        <input type="text" name="review" value="<%= schedule.review %>">
+                        <button type="submit">保存</button>
+                    </form>
                 </div>
             <% end %>
         <% end %>

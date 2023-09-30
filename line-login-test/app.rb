@@ -52,7 +52,19 @@ post '/:id/add_schedule' do
         parent_id: :id
     )
   
-  redirect "/:id/schedule"
+  redirect "/:id/schedule/request"
+end
+
+post '/update_review/:id' do
+  schedule_id = params[:id]
+  new_review = params[:review]
+
+  schedule = Schedule.find_by(id: schedule_id)
+  if schedule && schedule.teacher_id == current_user.line_id
+    schedule.update(review: new_review)
+  end
+
+  redirect "/teacher/#{current_user.line_id}/schedule"
 end
 
 get '/teacher/:id/schedule/request' do
@@ -160,7 +172,7 @@ get '/:id' do
     erb :parent_page
 end
 
-get '/:id/schedule' do
+get '/:id/schedule/request' do
     session[:parent] = params[:id]
     @schedules = Schedule.where(parent_id: :id)
     erb :parent_schedule
