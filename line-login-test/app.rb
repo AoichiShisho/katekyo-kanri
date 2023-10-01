@@ -25,13 +25,14 @@ end
 
 get '/join_schedule/:id' do
     schedule_id = params[:id]
-    user = current_user
+
+    puts current_user.line_id
 
     if user && user.is_a?(Teacher)  # ログインユーザーが教師の場合
         schedule = Schedule.find_by(id: schedule_id)
         if schedule && schedule.teacher_id.nil?
             # スケジュールのteacher_idをログインユーザーのIDに更新
-            schedule.update(teacher_id: user.line_id)
+            schedule.update(teacher_id: current_user.line_id)
         end
     end
 

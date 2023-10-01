@@ -82,7 +82,8 @@
                 </thead>
                 <tbody>
                     <% Schedule.all.each do |schedule| %>
-                        <% if schedule.date.strftime('%Y-%m') == params[:year_month] %>
+                    <%= schedule.parent_id %>
+                        <% if schedule.date.strftime('%Y-%m') == params[:year_month] && schedule.parent_id == current_user.line_id %>
                             <tr>
                                 <td class="px-4 py-2"><%= schedule.date %></td>
                                 <td class="px-4 py-2"><%= schedule.start_time.strftime('%H:%M') %></td>

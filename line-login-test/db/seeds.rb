@@ -1,0 +1,6 @@
+Grade.create(grade_number: 1, label: "中学一年生")
+Grade.create(grade_number: 2, label: "中学二年生")
+Grade.create(grade_number: 3, label: "中学三年生")
+Grade.create(grade_number: 4, label: "高校一年生")
+Grade.create(grade_number: 5, label: "高校二年生")
+Grade.create(grade_number: 6, label: "高校三年生")
