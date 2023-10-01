@@ -54,18 +54,47 @@
         <h1 class="text-3xl font-semibold mb-4 text-center">勤怠</h1>
         
         <!-- ドロップダウンメニューを追加 -->
-        <div class="dropdown-container">
-            <select id="year-month">
-                <% (0..11).each do |month_offset| %>
-                    <% target_date = Date.today + month_offset.months %>
-                    <% year_month = target_date.strftime('%Y-%m') %>
-                    <option value="<%= year_month %>"><%= target_date.strftime('%Y年%m月') %></option>
-                <% end %>
-            </select>
-            <button id="search-button" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">検索</button>
-        </div>
+        <form action="/teacher/<%= current_user.line_id %>/salary" method="get">
+            <div class="dropdown-container">
+                <select id="year-month" name="year_month">
+                    <% (0..11).each do |month_offset| %>
+                        <% target_date = Date.today + month_offset.months %>
+                        <% year_month = target_date.strftime('%Y-%m') %>
+                        <option value="<%= year_month %>"><%= target_date.strftime('%Y年%m月') %></option>
+                    <% end %>
+                </select>
+                <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">検索</button>
+            </div>
+        </form>
 
         <!-- ここにscheduleを表示 -->
+        <div class="schedule-card">
+            <h2 class="text-xl font-semibold mb-2"><%= params[:year_month] %>の（A先生の）給与明細</h2>
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">日付</th>
+                        <th class="px-4 py-2">開始時間</th>
+                        <th class="px-4 py-2">終了時間</th>
+                        <th class="px-4 py-2">交通費</th>
+                        <th class="px-4 py-2">給与</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Schedule.all.each do |schedule| %>
+                        <% if schedule.date.strftime('%Y-%m') == params[:year_month] %>
+                            <tr>
+                                <td class="px-4 py-2"><%= schedule.date %></td>
+                                <td class="px-4 py-2"><%= schedule.start_time.strftime('%H:%M') %></td>
+                                <td class="px-4 py-2"><%= schedule.end_time.strftime('%H:%M') %></td>
+                                <td class="px-4 py-2">交通費（未導入）</td>
+                                <td class="px-4 py-2">給与（未導入）</td>
+                            </tr>
+                        <% end %>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
         
     </div>
 </body>

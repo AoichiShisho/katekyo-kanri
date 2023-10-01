@@ -176,14 +176,13 @@ get '/teacher/:id/salary' do
     session[:teacher] = params[:id]
 
     # リクエストパラメータから年月を取得
-    selected_year_month = params[:year_month]
+    selected_year_month = params[:year_month] || Date.today.strftime('%Y-%m')
 
     # 選択された年月に一致するscheduleを取得
     @schedules = Schedule.where(teacher_id: current_user.line_id, date: selected_year_month)
 
     erb :teacher_salary
 end
-
 
 get '/:id/schedule/request' do
     session[:parent] = params[:id]
