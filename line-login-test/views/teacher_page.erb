@@ -29,7 +29,7 @@
 </style>
 
 <body>
-    <p>teacher page</p>
+    <!--<p>teacher page</p>-->
     <div>
         <% if current_user %>
             <img src="<%= current_user.img_url %>" alt="ユーザーの画像" class="user-image">
@@ -58,6 +58,17 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/2083/2083211.png" class="card-img-top" alt="カテキョの予定">
                         <div class="card-body">
                             <p class="card-text">カテキョの日程</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="bg-white border rounded-lg shadow-lg p-8 mb-4 mx-auto" style="width: 20rem;">
+                    <a href="/teacher/<%= params[:id] %>/salary">
+                        <img src="https://cdn-icons-png.flaticon.com/512/126/126230.png" class="card-img-top" alt="勤怠">
+                        <div class="card-body">
+                            <p class="card-text">勤怠</p>
                         </div>
                     </a>
                 </div>

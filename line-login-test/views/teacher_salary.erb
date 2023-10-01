@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>勤怠</title>
+    <!-- 他の<head>内の設定を追加 -->
+    <img src="https://cdn-icons-png.flaticon.com/512/126/126230.png" class="img-top" alt="カテキョ申請">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    
+</head>
+
+<!-- Tailwind CSSのスタイルを適用 -->
+<style>
+    body {
+        background-color: #98FB98;
+    }
+    
+    .img-top {
+        display: block;
+        margin: 0 auto;
+        max-width: 20%;
+        max-height: 20%;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .schedule-card {
+        background-color: white;
+        border-radius: 0.375rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .review-input {
+        width: 100%;
+        padding: 0.5rem; 
+        border: 1px solid #2b6cb0;
+        border-radius: 0.375rem;
+    }
+</style>
+
+<script>
+    document.getElementById('search-button').addEventListener('click', function() {
+        var selectedYearMonth = document.getElementById('year-month').value;
+        window.location.href = "/teacher/<%= current_user.line_id %>/salary?year_month=" + selectedYearMonth;
+    });
+</script>
+
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-semibold mb-4 text-center">勤怠</h1>
+        
+        <!-- ドロップダウンメニューを追加 -->
+        <div class="dropdown-container">
+            <select id="year-month">
+                <% (0..11).each do |month_offset| %>
+                    <% target_date = Date.today + month_offset.months %>
+                    <% year_month = target_date.strftime('%Y-%m') %>
+                    <option value="<%= year_month %>"><%= target_date.strftime('%Y年%m月') %></option>
+                <% end %>
+            </select>
+            <button id="search-button" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">検索</button>
+        </div>
+
+        <!-- ここにscheduleを表示 -->
+        
+    </div>
+</body>
+</html>

@@ -31,7 +31,7 @@ get '/join_schedule/:id' do
         schedule = Schedule.find_by(id: schedule_id)
         if schedule && schedule.teacher_id.nil?
             # スケジュールのteacher_idをログインユーザーのIDに更新
-            schedule.update(teacher_id: user.id)
+            schedule.update(teacher_id: user.line_id)
         end
     end
 
@@ -172,10 +172,23 @@ get '/:id' do
     erb :parent_page
 end
 
+get '/teacher/:id/salary' do
+    session[:teacher] = params[:id]
+
+    # リクエストパラメータから年月を取得
+    selected_year_month = params[:year_month]
+
+    # 選択された年月に一致するscheduleを取得
+    @schedules = Schedule.where(teacher_id: current_user.line_id, date: selected_year_month)
+
+    erb :teacher_salary
+end
+
+
 get '/:id/schedule/request' do
     session[:parent] = params[:id]
     @schedules = Schedule.where(parent_id: :id)
-    erb :parent_schedule
+    erb :parent_schedule_request
 end
 
 get '/:id/schedule/request' do

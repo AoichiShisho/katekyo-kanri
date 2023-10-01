@@ -3,15 +3,20 @@
 <head>
     <title>カテキョ日程</title>
     <!-- 他の<head>内の設定を追加 -->
-    <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png" class="card-img-top" alt="カテキョ申請">
+    <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png" class="img-top" alt="カテキョ申請">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
-    
 </head>
 
-<!-- Tailwind CSSのスタイルを適用 -->
 <style>
     body {
         background-color: #98FB98;
+    }
+
+    .img-top {
+        display: block;
+        margin: 0 auto;
+        max-width: 20%;
+        max-height: 20%;
     }
 
     .container {
@@ -27,6 +32,15 @@
         padding: 1rem;
         margin-bottom: 1rem;
     }
+
+    .text-lg {
+        margin-bottom: 0.25rem;
+    }
+
+    .approval-button {
+        margin-top: 1rem;
+        display: inline-block; /* ボタンがブロック要素にならないように修正 */
+    }
 </style>
 
 <body>
@@ -40,7 +54,7 @@
                     <p class="text-lg">日にち：<%= schedule.date %></p>
                     <p class="text-lg">開始時間：<%= schedule.start_time.strftime('%H:%M') %></p>
                     <p class="text-lg">終了時間：<%= schedule.end_time.strftime('%H:%M') %></p>
-                    <a href="/join_schedule/<%= schedule.id %>" class="btn-link">参加する</a>
+                    <a href="/join_schedule/<%= schedule.id %>" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full approval-button">承認する</a>
                 </div>
             <% end %>
         <% end %>
