@@ -36,7 +36,6 @@ get '/join_schedule/:id' do
         end
     end
 
-    # /teacher/:id/schedule にリダイレクト
     redirect "/teacher/#{user.line_id}/schedule/request"
 end
 
