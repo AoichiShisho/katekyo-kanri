@@ -8,9 +8,9 @@ enable :sessions
 
 helpers do
     def current_user
-        if session[:user_type] == 'parent'
+        if session[:user_type] == "parent"
             Parent.find_by(line_id: session[:parent])
-        elsif session[:user_type] == 'teacher'
+        elsif session[:user_type] == "teacher"
             Teacher.find_by(line_id: session[:teacher])
         else
             nil
@@ -18,10 +18,28 @@ helpers do
     end
 end
 
+before do
+    # content_type :json
+    p current_user
+end
+
 get '/:id/add_student' do
     session[:parent] = params[:id]
     erb :parent_add_student
 end
+
+post '/:id/add_student' do
+  # 新しい Student レコードを作成
+  student = Student.create(
+    name: params[:name],
+    grade_id: params[:grade_id],
+    school: params[:school],
+    parent_id: params[:id]  # 親のIDを正しく設定
+  )
+
+  redirect "/#{params[:id]}/settings"  # 親のIDを使用してリダイレクト
+end
+
 
 get '/join_schedule/:id' do
     schedule_id = params[:id]
@@ -78,19 +96,6 @@ get '/:id/schedule/create' do
     erb :parent_create_schedule
 end
 
-post '/:id/add_student' do
-  session[:parent] = params[:id]
-  # 新しい Student レコードを作成
-  student = Student.create(
-    name: params[:name],
-    grade_id: params[:grade_id],
-    school: params[:school],
-    parent_id: :id
-  )
-
-  redirect "/:id/settings"
-end
-
 post '/edit_student' do
   student_id = params[:student_id]
   name = params[:name]
@@ -137,35 +142,57 @@ get '/teacher/:id' do
     erb :teacher_page
 end
 
-post '/parent' do
-    name = params[:name]
-    img_url = params[:img_url]
-    line_id = params[:line_id]
-    
-    parent = Parent.create(
-        name: name,
-        img_url: img_url,
-        line_id: line_id
-    )
-    
-   session[:user_type] = 'parent' 
-    { parent_id: line_id }.to_json
+post "/account" do
+    if parent = Parent.find_by(line_id: params[:userId])
+        session[:user_type] = "parent"
+        session[:teacher] = nil
+        session[:parent] = parent.line_id
+        content_type :json
+        {user_type: "parent", parent: parent}.to_json
+    elsif teacher = Teacher.find_by(line_id: params[:userId])
+        session[:user_type] = "teacher"
+        session[:parent] = nil
+        session[:teacher] = teacher.line_id
+        content_type :json
+        {user_type: "teacher", teacher: teacher}.to_json
+    else
+        return nil
+    end
 end
 
-post '/teacher' do
-    name = params[:name]
-    img_url = params[:img_url]
-    line_id = params[:line_id]
-    
-    teacher = Teacher.create(
-        name: name,
-        img_url: img_url,
-        line_id: line_id
-    )
-    
-    session[:user_type] = 'teacher'
-    { teacher_id: line_id }.to_json
+get "/signup" do
+    erb :signup
 end
+
+# post '/parent' do
+#     name = params[:name]
+#     img_url = params[:img_url]
+#     line_id = params[:line_id]
+    
+#     parent = Parent.create(
+#         name: name,
+#         img_url: img_url,
+#         line_id: line_id
+#     )
+    
+#   session[:user_type] = 'parent' 
+#     { parent_id: line_id }.to_json
+# end
+
+# post '/teacher' do
+#     name = params[:name]
+#     img_url = params[:img_url]
+#     line_id = params[:line_id]
+    
+#     teacher = Teacher.create(
+#         name: name,
+#         img_url: img_url,
+#         line_id: line_id
+#     )
+    
+#     session[:user_type] = 'teacher'
+#     { teacher_id: line_id }.to_json
+# end
 
 get '/:id' do
     session[:parent] = params[:id]

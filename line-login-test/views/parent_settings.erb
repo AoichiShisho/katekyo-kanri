@@ -65,6 +65,7 @@
                             <p>grade key is: </p><%= Grade.find_by(grade_number: 1) %>
                             <p class="border-gray-300 mb-2 pb-2"><strong>学年：</strong> <%= Grade.find_by(grade_number: student.grade_id)&.label || '学年不明' %> </p>
                             <p class="border-gray-0 mb-2 pb-2"><strong>学校名：</strong> <%= student.school %> </p>
+                            <p class="border-gray-0 mb-2 pb-2"><strong>親のID：</strong> <%= student.parent_id %> </p>
                             <a href="/edit_student/<%= student.id %>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block mt-2">編集</a>
                         </div>
                     <% end %>
