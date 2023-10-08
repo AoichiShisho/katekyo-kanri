@@ -1,0 +1,36 @@
+<main>
+    <div class="title">
+        <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png">
+        <% if current_user.is_parent? %>
+        <h1>カテキョ申請</h1>
+        <% elsif current_user.is_teacher? %>
+        <h1>カテキョ承認</h1>
+        <% end %>
+    </div>
+    
+    <div class="content">
+        <h2>教師待ちの日程：</h2>
+        
+        <div class="card-container">
+            <% if @schedules.empty? %>
+            <p>スケジュールがありません。</p>
+            <% else %>
+                <% @schedules.each do |schedule| %>
+                <div class="card">
+                    <p class="card-first">学生の名前： <%= schedule.student.name %></p>
+                    <p class="card-child"><span>日付： </span><%= schedule.date %></p>
+                    <p class="card-child"><span>開始時間： </span><%= schedule.start_time.strftime('%H:%M') %></p>
+                    <p class="card-child"><span>終了時間： </span><%= schedule.end_time.strftime('%H:%M') %></p>
+                    <% if current_user.is_a?(Teacher) %>
+                    <a href="/approval/<%= schedule.id %>" class="button">承認する</a>
+                    <% end %>
+                </div>
+                <% end %>
+            <% end %>
+            <% if current_user.is_parent? %>
+            <a class="button" href="/schedule/create">日程を追加</a>
+            <% end %>
+        </div>
+    </div>
+</main>
+        

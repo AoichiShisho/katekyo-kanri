@@ -1,0 +1,33 @@
+<main>
+    <div class="title">
+        <img src="https://cdn-icons-png.flaticon.com/512/2083/2083211.png">
+        <h1>カテキョ日程</h1>
+    </div>
+    
+    <div class="content">
+        <h2>日程一覧：</h2>
+        <% if @schedules.empty? %>
+        <p>表示する内容がありません</p>
+        <% else %>
+        <div class="card-container">
+            <% @schedules.each do |schedule| %>
+            <div class="card">
+                <p class="card-first"><span>日程：</span><%= schedule.date %></p>
+                <p class="card-child"><span>授業時刻：</span><%= schedule.start_time.strftime('%H:%M') %> ~ <%= schedule.end_time.strftime('%H:%M') %></p>
+                <p class="card-child"><span>学生の名前：</span><%= schedule.student.name %></p>
+                <p class="card-child"><span>担当の先生：</span><%= schedule.teacher.name %></p>
+                <% if current_user.is_parent? %>
+                <p class="card-child"><span>授業の振り返り：</span><%= schedule.review %></p>
+                <% elsif current_user.is_a?(Teacher) %>
+                <form class="review-form card-child" action="/update_review/<%= schedule.id %>" method="post">
+                    <label for="review"><span>振り返り：</span></label>
+                    <textarea id="review" name="review" rows="4" class="review-input"><%= schedule.review %></textarea>
+                    <button type="submit" class="button">保存</button>
+                </form>
+                <% end %>
+            </div>
+            <% end %>
+        </div>
+        <% end %>
+    </div>
+</main>

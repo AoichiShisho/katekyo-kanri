@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>LINE LIFFテスト</title>
-    </head>
-    <body>
+<main>
+    <div class="signup">
         <h1>アカウントの種類を選択してください</h1>
-    </body>
-</html>
+        <form action="/signup" method="POST">
+            <button class="button button-outline" type="submit" name="user_type" value="teacher">先生</button>
+            <button class="button button-outline" type="submit" name="user_type" value="parent">保護者</button>
+        </form>
+    </div>
+</main>

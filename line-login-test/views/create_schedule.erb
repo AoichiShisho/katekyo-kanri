@@ -1,0 +1,37 @@
+<main>
+    <div class="title title-small">
+        <h1>日程追加</h1>
+    </div>
+    
+    <div class="content">
+        <form class="form" action="/add_schedule" method="POST">
+            <div class="form-content">
+                <label for="student_id">学生の名前:</label><br>
+                <div class="select-wrapper">
+                    <select name="student_id" required>
+                        <% @students.each do |student| %>
+                            <option value="<%= student.id %>"><%= student.name %></option>
+                        <% end %>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-content">
+                <label for="date">日付:</label><br>
+                <input type="date" name="date" required>
+            </div>
+            
+            <div class="form-content">
+                <label for="start_time">開始時間:</label><br>
+                <input type="time" name="start_time" required>
+            </div>
+            
+            <div class="form-content">
+                <label for="end_time">終了時間:</label><br>
+                <input type="time" name="end_time" required>
+            </div>
+            
+            <button type="submit">日程を追加</button>
+        </form>
+    </div>
+</main>

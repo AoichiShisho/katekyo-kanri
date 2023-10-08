@@ -3,7 +3,7 @@ class CreateTeachers < ActiveRecord::Migration[6.1]
     create_table :teachers do |t|
       t.string :name
       t.string :img_url
-      t.string :line_id
+      t.integer :line_id
       t.string :bank_name
       t.string :branch_name
       t.integer :account_num

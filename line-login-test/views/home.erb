@@ -1,0 +1,35 @@
+<main>
+    <div class="profile">
+        <img src="<%= current_user.img_url %>" alt="ユーザーの画像">
+        <p><%= current_user.name %></p>
+    </div>
+            
+    <div class="menu">
+        
+        <a href="/schedule/requests">
+            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652221.png">
+            <% if current_user.is_parent? %>
+            <h1>カテキョ申請</h1>
+            <% elsif current_user.is_teacher? %>
+            <h1>カテキョ承認</h1>
+            <% end %>
+        </a>
+        
+        <a href="/schedules">
+            <img src="https://cdn-icons-png.flaticon.com/512/2083/2083211.png">
+            <h1>カテキョ日程</h1>
+        </a>
+        
+        <% if current_user.is_teacher? %>
+        <a href="/salary">
+            <img src="https://cdn-icons-png.flaticon.com/512/126/126230.png">
+            <h1>勤怠</h1>
+        </a>
+        <% end %>
+    
+        <a href="/settings">
+            <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png">
+            <h1>設定</h1>
+        </a>
+    </div>
+</main>

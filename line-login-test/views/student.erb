@@ -1,0 +1,44 @@
+<!--<style>-->
+    <!--body {-->
+    <!--    background-color: #B0C4DE;-->
+    <!--}-->
+<!--</style>-->
+<main>
+    <% if @is_edit %>
+    <div class="title-small">
+        <h1>お子さんを編集</h1>
+    </div>
+    <% else %>
+    <div class="title">
+        <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png">
+        <h1>お子さんを追加</h1>
+    </div>
+    <% end %>
+    
+    <div class="content">
+        <form class="form" action="<%= @is_edit ? "/edit_student/#{@student.id}" : "/add_student" %>" method="POST">
+            <div class="form-content">
+                <label for="name">お子さんの名前:</label><br>
+                <input type="text" name="name" value="<%= @is_edit && @student.name %>" required>
+            </div>
+            
+            <div class="form-content">
+                <label for="grade_id">学年:</label><br>
+                <div class="select-wrapper">
+                    <select name="grade_id" required>
+                        <% Grade.all.each do |grade| %>
+                        <option value="<%= grade.id %>" <%= @is_edit && @student.grade.id == grade.id && "selected" %>><%= grade.label %></option>
+                        <% end %>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-content">
+                <label for="school">学校名:</label><br>
+                <input type="text" name="school" value="<%= @is_edit && @student.school %>" required>
+            </div>
+            
+            <button type="submit"><%= @is_edit ? "更新" : "追加" %></button>
+        </form>
+    </div>
+</main>

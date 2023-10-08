@@ -1,0 +1,62 @@
+
+<!-- Tailwind CSSのスタイルを適用 -->
+<!--<style>-->
+<!--    body {-->
+<!--        background-color: #98FB98;-->
+<!--    }-->
+    
+<!--    .img-top {-->
+<!--        display: block;-->
+<!--        margin: 0 auto;-->
+<!--        max-width: 20%;-->
+<!--        max-height: 20%;-->
+<!--    }-->
+
+<!--    .container {-->
+<!--        max-width: 800px;-->
+<!--        margin: 0 auto;-->
+<!--        padding: 20px;-->
+<!--    }-->
+
+<!--    .schedule-card {-->
+<!--        background-color: white;-->
+<!--        border-radius: 0.375rem;-->
+<!--        padding: 1rem;-->
+<!--        margin-bottom: 1rem;-->
+<!--    }-->
+    
+<!--    .review-input {-->
+<!--        width: 100%;-->
+<!--        padding: 0.5rem; -->
+<!--        border: 1px solid #2b6cb0;-->
+<!--        border-radius: 0.375rem;-->
+<!--    }-->
+<!--</style>-->
+<main>
+    <div class="title title-small">
+        <h1>勤怠</h1>
+    </div>
+    
+    <div class="content">
+        <div class="salary">
+            <select name="year_month">
+                <% 12.times do |i| %>
+                <% ym = Date.today - (12 - i).months %>
+                <option value="<%= ym.strftime("%Y-%m") %>" selected><%= ym.strftime("%Y年%m月") %></option>
+                <% end %>
+            </select>
+            <h2>の勤怠記録</h2>
+        </div>
+        <div class="salary-table">
+            <table>
+                <tr>
+                    <th>日付</th>
+                    <th>開始時刻</th>
+                    <th>終了時刻</th>
+                    <th>交通費</th>
+                    <th>金額</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>

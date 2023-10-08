@@ -1,81 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>LINE LIFFテスト</title>
-</head>
-<body>
-    <!-- スクリプトを読み込む -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-    <script type="text/javascript">
-    
-        // LINE LIFF初期化と自動ログイン
-        liff.init({
-            // LIFF IDはリンクの末尾
-            // dev-id: 2000738317-BrwapmbM
-            // prod-id: 2000738319-3Ejadv1W
-            liffId: '2000738317-BrwapmbM'
-        }).then(() => {
-            console.log('LIFF初期化成功');
-            !liff.isLoggedIn && liff.login(); // ユーザーがログインしていない場合、自動ログインを試みる
-            getLineIDToken(); // LINE IDとユーザー情報を取得
-        }).catch((err) => {
-            // エラーをキャッチ
-            console.log(err.code, err.message);
-        });
+<!-- スクリプトを読み込む -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script type="text/javascript">
+    // LINE LIFF初期化と自動ログイン
+    liff.init({
+        // LIFF IDはリンクの末尾
+        // dev-id: 2001000373-16QAp0gM
+        // prod-id: 2001000375-J0eV1n54
+        liffId: '2001000373-16QAp0gM'
+    }).then(() => {
+        console.log('LIFF初期化成功');
+        !liff.isLoggedIn && liff.login(); // ユーザーがログインしていない場合、自動ログインを試みる
+        getLineIDToken(); // LINE IDとユーザー情報を取得
+    }).catch((err) => {
+        console.log(err);
+        window.location.href = `/error`;
+    });
 
-        const getLineIDToken = () => {
-            if (liff.isLoggedIn) {
-                const idToken = liff.getIDToken();
-                liff.getProfile().then(profile => {
-                    // my line id is  "Ud8ad4ebf8e3482fa10e3a0c21ab32390";
-                    // const parentList = ["Ud8ad4ebf8e3482fa10e3a0c21ab32390"];
-                    $.post("/account", profile).then(res => {
-                        if (res.user_type == "parent") {
-                            window.location.href = `/${res.parent.line_id}`;
-                        } else if (res.user_type == "teacher") {
-                            window.location.href = `/teacher/${res.teacher.line_id}`;
-                        } else {
-                            window.location.href = `/signup`;
-                        }
-                    }).catch(err => {
-                        console.log(err);
-                         window.location.href = `/`;
-                    });
-                    // if (parentList.includes(userId)) {
-                    //     $.post("/parent", { 
-                    //         name: displayName, 
-                    //         img_url: pictureUrl, 
-                    //         line_id: userId 
-                    //     }, response => {
-                    //         console.log("Parentが作成されました。 Response: " + response);
-                    //         window.location.href = `/${userId}`;
-                    //     });
-                    // } else {
-                    //     $.post("/teacher", {
-                    //         name: displayName,
-                    //         img_url: pictureUrl,
-                    //         line_id: userId
-                    //     }, response => {
-                    //         console.log("Teacherが作成されました。Response: " + response);
-                    //         window.location.href = `/teacher/${userId}`;
-                    //     });
-                    // }
-                }).catch((error) => {
-                    console.error("プロフィール情報の取得エラー：" + error);
-                    window.location.href = `/`;
+    const getLineIDToken = () => {
+        if (liff.isLoggedIn) {
+            liff.getProfile().then(profile => {
+                $.post("/account", profile).then(res => {
+                    if (res) {
+                        window.location.href = "/home";
+                    } else {
+                        window.location.href = "/signup";
+                    }
+                }).catch(err => {
+                    console.log(`アカウント認証のエラー: ${err}`);
+                    window.location.href = `/error`;
                 });
-            } else {
-                liff.login(); // ログインされていない場合、ログインを促す
-            }
-        }    
-        
-        const profileConsoleTest = profile => {
-            const { displayName, pictureUrl, userId } = profile;
-            console.log("ユーザー名：" + displayName);
-            console.log("画像：" + pictureUrl);
-            console.log("ID：" + userId);
+            }).catch(err => {
+                console.log(`プロフィール情報の取得エラー: ${err.code}`);
+                liff.isLoggedIn = false;
+                liff.login();
+            });
+        } else {
+            liff.login(); // ログインされていない場合、ログインを促す
         }
-    </script>
-</body>
-</html>
+    }    
+</script>

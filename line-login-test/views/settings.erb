@@ -1,0 +1,25 @@
+<main>
+    <div class="title">
+        <img src="https://cdn-icons-png.flaticon.com/512/563/563541.png" class="img-top" alt="設定">
+        <h1 class="setting-title">設定</h1>
+    </div>
+    
+    <div class="content">
+        <h2>お子さん:</h2>
+        <% if @students.empty? %>
+            <p>お子さんが登録されていません。</p>
+        <% else %>
+            <div class="card-container">
+                <% @students.each do |student| %>
+                <div class="card">
+                    <p class="card-first"><span>生徒名：</span><%= student.name %> </p>
+                    <p class="card-child"><span>学年：</span><%= student.grade.label %></p>
+                    <p class="card-child"><span>学校名：</span><%= student.school %></p>
+                    <a href="/edit_student/<%= student.id %>" class="button button-outline">編集</a>
+                </div>
+                <% end %>
+            </div>
+        <% end %>
+        <a href="/add_student" class="button button-long">お子さんを追加</a>
+    </div>
+</main>

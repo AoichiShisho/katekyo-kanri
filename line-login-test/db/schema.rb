@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2023_10_01_070215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "timescaledb"
 
   create_table "grades", force: :cascade do |t|
     t.integer "grade_number"
@@ -28,12 +27,12 @@ ActiveRecord::Schema.define(version: 2023_10_01_070215) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.string "student_name"
     t.date "date"
     t.time "start_time"
     t.time "end_time"
-    t.string "parent_id"
-    t.string "teacher_id"
+    t.integer "student_id"
+    t.integer "parent_id"
+    t.integer "teacher_id"
     t.string "review"
   end
 
