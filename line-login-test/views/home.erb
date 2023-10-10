@@ -1,7 +1,10 @@
 <main>
     <div class="profile">
         <img src="<%= current_user.img_url %>" alt="ユーザーの画像">
-        <p><%= current_user.name %></p>
+        <div>
+            <p><%= current_user.name %></p>
+            <button type="button" id="logout-button">ログアウト</button>
+        </div>
     </div>
             
     <div class="menu">
@@ -33,3 +36,19 @@
         </a>
     </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script>
+    const logoutButton = document.getElementById("logout-button");
+    logoutButton.onclick = () => {
+        liff.init({liffId: "<%= @liff_id %>"}).then(()=>{
+            liff.logout();
+            $.post("/logout").then(() => {
+                window.location = "/";
+            }).catch(err => {
+                console.log(err);
+            });
+        });
+    }
+</script>

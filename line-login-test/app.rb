@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'sinatra/base'
 Bundler.require
 require 'sinatra/reloader' if development?
 
@@ -31,7 +32,11 @@ helpers do
 end
 
 before do
-
+    if Sinatra::Base.environment == :development
+        @liff_id = "2001000373-16QAp0gM"
+    else
+        @liff_id = "2001000375-J0eV1n54"
+    end
 end
 
 get '/' do
@@ -83,6 +88,10 @@ post "/signup" do
     end
 end
 
+post "/logout" do
+    session[:user] = nil
+end
+
 get "/home" do
     authenticate!
     @title = "ホーム"
@@ -128,6 +137,7 @@ end
 get "/add_student" do
     authenticate_parent!
     @title = "お子さんを追加"
+    @grades = Grade.all
     erb :student
 end
 
@@ -142,6 +152,7 @@ get "/edit_student/:id" do
     @title = "お子さんを編集"
     @is_edit = true
     @student = current_user.students.find(params[:id])
+    @grades = Grade.all
     erb :student
 end
 

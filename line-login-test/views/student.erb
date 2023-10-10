@@ -26,7 +26,7 @@
                 <label for="grade_id">学年:</label><br>
                 <div class="select-wrapper">
                     <select name="grade_id" required>
-                        <% Grade.all.each do |grade| %>
+                        <% @grades.each do |grade| %>
                         <option value="<%= grade.id %>" <%= @is_edit && @student.grade.id == grade.id && "selected" %>><%= grade.label %></option>
                         <% end %>
                     </select>
