@@ -37,6 +37,7 @@ before do
     else
         @liff_id = "2001000375-J0eV1n54"
     end
+    @grades = Grade.all
 end
 
 get '/' do
