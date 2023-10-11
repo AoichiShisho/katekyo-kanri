@@ -42,7 +42,7 @@
 <script>
     const logoutButton = document.getElementById("logout-button");
     logoutButton.onclick = () => {
-        liff.init({liffId: "<%= '2001000375-J0eV1n54' %>"}).then(()=>{
+        liff.init({liffId: "<%= '2001000373-16QAp0gM' %>"}).then(()=>{
             liff.logout();
             $.post("/logout").then(() => {
                 window.location = "/";

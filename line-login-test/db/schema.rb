@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(version: 2023_10_01_070215) do
     t.string "name"
     t.integer "grade_id"
     t.string "school"
-    t.string "parent_id"
+    t.integer "parent_id"
   end
 
   create_table "teachers", force: :cascade do |t|
     t.string "name"
     t.string "img_url"
-    t.string "line_id"
+    t.integer "line_id"
     t.string "bank_name"
     t.string "branch_name"
     t.integer "account_num"
