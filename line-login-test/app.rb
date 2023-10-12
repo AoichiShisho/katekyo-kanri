@@ -37,7 +37,12 @@ before do
     else
         @liff_id = "2001000375-J0eV1n54"
     end
-    @grades = Grade.all
+    
+    if Grade.all.empty?
+        6.times do |i|
+            Grade.create(grade_number: i + 1, label: i < 3 ? "中学#{i + 1}年生" : "高校#{i % 3 + 1}年生")
+        end
+    end
 end
 
 get '/' do
